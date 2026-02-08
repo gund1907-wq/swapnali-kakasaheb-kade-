@@ -1,0 +1,113 @@
+hotel-website/
+│── index.html
+│── style.css
+│── script.js
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+  <meta charset="UTF-8">
+  <title>My Hotel</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <h1>🍽️ My Hotel</h1>
+  <p>Fresh & Tasty Food</p>
+</header>
+
+<section class="menu">
+  <h2>Veg Menu</h2>
+
+  <div class="item">
+    <span>Paneer Butter Masala – ₹180</span>
+    <button onclick="addToCart('Paneer Butter Masala',180)">Add</button>
+  </div>
+
+  <div class="item">
+    <span>Veg Biryani – ₹150</span>
+    <button onclick="addToCart('Veg Biryani',150)">Add</button>
+  </div>
+
+  <h2>Non-Veg Menu</h2>
+
+  <div class="item">
+    <span>Chicken Biryani – ₹220</span>
+    <button onclick="addToCart('Chicken Biryani',220)">Add</button>
+  </div>
+</section>
+
+<section class="cart">
+  <h2>Your Order</h2>
+  <ul id="cartItems"></ul>
+  <p><b>Total: ₹<span id="total">0</span></b></p>
+  <button onclick="placeOrder()">Order on WhatsApp</button>
+</section>
+
+<script src="script.js"></script>
+</body>
+</html>
+body {
+  font-family: Arial;
+  background: #f5f5f5;
+  margin: 0;
+}
+
+header {
+  background: #d62828;
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
+
+.menu, .cart {
+  background: white;
+  margin: 20px;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.item {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0;
+}
+
+button {
+  background: green;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: darkgreen;
+}
+let cart = [];
+let total = 0;
+
+function addToCart(item, price) {
+  cart.push(item + " ₹" + price);
+  total += price;
+
+  document.getElementById("cartItems").innerHTML =
+    cart.map(i => "<li>" + i + "</li>").join("");
+
+  document.getElementById("total").innerText = total;
+}
+
+function placeOrder() {
+  if (cart.length === 0) {
+    alert("Order is empty");
+    return;
+  }
+
+  let phone = "918805492197"; // तुमचा WhatsApp नंबर
+  let message = "New Food Order:%0A" +
+                cart.join("%0A") +
+                "%0A%0ATotal: ₹" + total;
+
+  window.open("https://wa.me/" + phone + "?text=" + message);
+}
